@@ -1,0 +1,69 @@
+import React, { useState } from 'react';
+import Footer from './component/Footer'; // Assuming Footer is in the same directory
+
+const Contents = () => {
+  const [name, setName] = useState('');
+  const [date, setDate] = useState('');
+  const [showFooter, setShowFooter] = useState(false);
+
+  const handleAlert = (e) => {
+    e.preventDefault(); // Prevent form submission
+
+    if (name === '' || date === '') {
+      alert('Please input Name and Date');
+    } else {
+      setShowFooter(true); // Show the Footer component
+    }
+  };
+
+  return (
+    <>
+      <form className='form-container' onSubmit={handleAlert}>
+        <div className="form-elements">
+          <label htmlFor="Name">Name: </label>
+          <input 
+            type="text" 
+            id='Name'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+
+        <div className="form-elements">
+          <label htmlFor="Date">D.O.B: </label>
+          <input 
+            type="date" 
+            id='Date'
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </div>
+        
+        <button type='submit' className='submit-button'>Submit</button>
+      </form>
+
+      {showFooter && <Footer name={name} date={date} />} {/* Render Footer component conditionally */}
+    </>
+  );
+};
+
+export default Contents;
+
+
+import React from 'react';
+import { FaTimes } from 'react-icons/fa';
+
+const Footer = ({ name, date }) => {
+  return (
+    <div className="birthday-list">
+      <div className="text-container">
+        <h4 id='name'>{name}</h4>
+        <h4 id='dateOfBirth'>{date}</h4>
+        <h4 id='age'>100</h4>
+        <h4 className='icon'><FaTimes className="x-icon" /></h4>
+      </div>
+    </div>
+  );
+};
+
+export default Footer;
